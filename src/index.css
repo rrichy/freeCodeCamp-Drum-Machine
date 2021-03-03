@@ -8,31 +8,54 @@ body {
 }
 
 #drum-machine {
+    display: flex;
+    justify-content: space-evenly;
     background-color: silver;
     border:saddlebrown solid 3px;
-    height: 600px;
-    width: 600px;
+    /* padding: 20px; */
+    height: max-content;
+    width: max-content;
 }
 
-#display {
+#drum-container {
     width: 258px;
+    height: 258px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 20px;
 }
 
-/* .drum-pad {
-    display: flex;
+.drum-pad {
+    /* display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: #4169e1;
+    align-items: center; */
+    /* background-color: #4169e1; */
     margin: 3px;
     height: 80px;
     width:  80px;
     border-radius: .6rem;
-} */
+}
 
-/* .drum-pad:hover {
-    cursor: pointer;
-    background-color: #6f90f1;
+#display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+#display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aquamarine;
+    width: 140px;
+    height: 2.2em;
+    font-weight: 700;
+}
+
+/* #bank-switcher {
+    height: 1.5em;
+    width: 80px;
 } */
