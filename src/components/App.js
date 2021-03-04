@@ -146,7 +146,7 @@ class App extends React.Component {
                         {this.state.display}
                     </p>
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                        <p style={{margin: '0px', fontWeight: '700'}}>Bank Switcher</p>
+                        <p style={{color: 'white', margin: '0px', fontWeight: '700'}}>Bank Switcher</p>
                         <button id="bank-switcher" onClick={this.bankSwitch} style={this.state.bankStyle}>
                             LSHIFT
                         </button>
