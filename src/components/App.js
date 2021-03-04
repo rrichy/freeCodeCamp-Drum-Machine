@@ -9,13 +9,24 @@ class DrumPad extends React.Component {
         super(props);
         this.playSound = this.playSound.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.activeButton = this.activeButton.bind(this);
+    }
+
+    activeButton() {
+        if($('.drum-' + this.props.index)[0].className.includes('drum-active')){
+            $('.drum-' + this.props.index)[0].className = 'drum-pad drum-' + this.props.index;
+        }
+        else{
+            $('.drum-' + this.props.index)[0].className = 'drum-pad drum-' + this.props.index + ' drum-active';
+        }
     }
 
     playSound() {
         let audio = $('#' + this.props.item.keyTrigger)[0];
         audio.currentTime = 0;
         audio.play();
-
+        this.activeButton();
+        setTimeout(() => this.activeButton(), 100);
         this.props.updateDisplay(this.props.item.id);
     }
 
@@ -35,7 +46,7 @@ class DrumPad extends React.Component {
 
     render() {
         return (
-            <button className="drum-pad btn btn-primary" id={this.props.item.id} onClick={this.playSound}>
+            <button className={"drum-pad drum-" + this.props.index} id={this.props.item.id} onClick={this.playSound}>
                 <audio id={this.props.item.keyTrigger} className="clip" src={this.props.item.url} />
                 {this.props.item.keyTrigger}
             </button>
@@ -55,12 +66,15 @@ class App extends React.Component {
                 width: '80px',
                 padding: '0px',
                 color: 'white',
-                fontWeight: '700'
-            }
+                fontWeight: '700',
+                marginBottom: '10px'
+            },
+            volume: 50
         };
         this.changeDisplay = this.changeDisplay.bind(this);
         this.bankSwitch = this.bankSwitch.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.changeVolume = this.changeVolume.bind(this);
     }
 
     changeDisplay(name) {
@@ -69,8 +83,14 @@ class App extends React.Component {
         });
     }
 
+    changeVolume(event) {
+        this.setState({
+            volume: event.target.value
+        });
+    }
+
     handleKeyPress(event) {
-        if(event.keyCode === 32){
+        if(event.keyCode === 16){
             this.bankSwitch();
         }
     }
@@ -85,7 +105,8 @@ class App extends React.Component {
                     width: '80px',
                     padding: '0px',
                     color: 'white',
-                    fontWeight: '700'
+                    fontWeight: '700',
+                    marginBottom: '10px'
                 }
             });
         }
@@ -98,7 +119,8 @@ class App extends React.Component {
                     width: '80px',
                     padding: '0px',
                     color: 'white',
-                    fontWeight: '700'
+                    fontWeight: '700',
+                    marginBottom: '10px'
                 }
             });
         }
@@ -116,18 +138,20 @@ class App extends React.Component {
         return (
             <div id="drum-machine">
                 <div id="drum-container">
-                    { banks[this.state.currentBank].map(item => <DrumPad item={item} updateDisplay={this.changeDisplay}/>) }
+                    { banks[this.state.currentBank].map((item, index) => <DrumPad item={item} updateDisplay={this.changeDisplay} index={index}/>) }
                 </div>
                 <div id="display-container">
+                    <h3 style={{color: 'white', marginBottom: '20px'}}>Drum Machine</h3>
                     <p id="display">
                         {this.state.display}
                     </p>
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <p style={{margin: '0px', fontWeight: '700'}}>Bank Switcher</p>
                         <button id="bank-switcher" onClick={this.bankSwitch} style={this.state.bankStyle}>
-                            SPACE
+                            LSHIFT
                         </button>
                     </div>
+                    <input type="range" min="1" max="100" onChange={this.changeVolume} value={this.state.volume}></input>
                 </div>
             </div>
         );
