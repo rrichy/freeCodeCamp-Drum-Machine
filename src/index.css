@@ -20,7 +20,6 @@ body {
     justify-content: space-evenly;
     background-color: #262626;
     border:saddlebrown solid 3px;
-    /* padding: 20px; */
     height: max-content;
     width: max-content;
 }
@@ -84,7 +83,9 @@ body {
     font-weight: 700;
 }
 
-/* #bank-switcher {
-    height: 1.5em;
-    width: 80px;
-} */
+@media (max-width: 560px) {
+    #drum-machine {
+        /* width: 258px; */
+        flex-direction: column;
+    }
+}
